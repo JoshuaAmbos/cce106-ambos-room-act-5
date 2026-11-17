@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
+import 'demo_auth.dart';
+import 'login_screen.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  void _handleLogout(BuildContext context) {
+    DemoAuth.logout();
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
+        actions: [
+          IconButton(
+            tooltip: 'Logout',
+            icon: const Icon(Icons.logout),
+            onPressed: () => _handleLogout(context),
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),
-        children: const [
-          CircleAvatar(
+        children: [
+          const CircleAvatar(
             radius: 50,
             backgroundColor: Colors.indigo,
             child: Icon(
@@ -21,8 +41,8 @@ class ProfilePage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Joshua Ambos',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -30,8 +50,8 @@ class ProfilePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 24),
-          Card(
+          const SizedBox(height: 24),
+          const Card(
             child: Column(
               children: [
                 ListTile(
@@ -51,6 +71,12 @@ class ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () => _handleLogout(context),
+            icon: const Icon(Icons.logout),
+            label: const Text('Logout'),
           ),
         ],
       ),
